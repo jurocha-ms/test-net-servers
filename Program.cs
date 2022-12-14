@@ -5,19 +5,23 @@ using System.Net;
 
 async Task ListenAsync(HttpListener listener)
 {
-	var context = await listener.GetContextAsync();
-	var request = context.Request;
-
-	// Obtain a response object.
-	var response = context.Response;
-	// Construct a response.
-	string responseString = "<HTML><BODY> Hello world!</BODY></HTML>";
-	byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-	// Get a response stream and write the response to it.
-	response.ContentLength64 = buffer.Length;
-	using (var output = response.OutputStream)
+	while(true)
 	{
-		output.Write(buffer,0,buffer.Length);
+		var context = await listener.GetContextAsync();
+		var request = context.Request;
+
+		// Obtain a response object.
+		var response = context.Response;
+		// Construct a response.
+		string responseTemplate = "<html><body>Hello at<br/>{0}!</body></html>";
+		string responseString = string.Format(responseTemplate, DateTime.Now);
+		byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+		// Get a response stream and write the response to it.
+		response.ContentLength64 = buffer.Length;
+		using (var output = response.OutputStream)
+		{
+			output.Write(buffer,0,buffer.Length);
+		}
 	}
 }
 
