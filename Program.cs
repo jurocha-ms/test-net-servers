@@ -10,7 +10,17 @@ async Task ListenAsync(HttpListener listener)
 		var context = await listener.GetContextAsync();
 		var request = context.Request;
 
-		// Obtain a response object.
+		// Log Request
+		Console.WriteLine(request.HttpMethod);
+#if true
+		foreach (var key in request.Headers.Keys)
+		{
+			Console.WriteLine("{0}", key);
+			Console.WriteLine("\t{0}", request.Headers[key.ToString()]);
+		}
+#endif
+
+		// Send response
 		var response = context.Response;
 		// Construct a response.
 		string responseTemplate = "<html><body>Hello at<br/>{0}!</body></html>";
@@ -20,7 +30,7 @@ async Task ListenAsync(HttpListener listener)
 		response.ContentLength64 = buffer.Length;
 		using (var output = response.OutputStream)
 		{
-			output.Write(buffer,0,buffer.Length);
+			await output.WriteAsync(buffer,0,buffer.Length);
 		}
 	}
 }
