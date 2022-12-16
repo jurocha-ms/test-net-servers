@@ -1,4 +1,4 @@
-﻿// See https://gist.github.com/define-private-public/d05bc52dd0bed1c4699d49e2737e80e7
+// See https://gist.github.com/define-private-public/d05bc52dd0bed1c4699d49e2737e80e7
 // See https://learn.microsoft.com/en-us/dotnet/api/system.net.httplistenerrequest?view=net-6.0
 
 using System.Net;
