@@ -18,19 +18,16 @@ async Task ListenAsync(HttpListener listener)
 	using (var output = response.OutputStream)
 	{
 		output.Write(buffer,0,buffer.Length);
-		// You must close the output stream.
-		output.Close();
 	}
 }
 
-// Create a listener.
-HttpListener listener = new HttpListener();
-// Add the prefixes.
-listener.Prefixes.Add("http://localhost:5555/");
-listener.Start();
+using(var listener = new HttpListener())
+{
+	// Add the prefixes.
+	listener.Prefixes.Add("http://localhost:5555/");
+	listener.Start();
 
-Console.WriteLine("Listening...");
+	Console.WriteLine("Listening...");
 
-ListenAsync(listener).GetAwaiter().GetResult();
-
-listener.Stop();
+	ListenAsync(listener).GetAwaiter().GetResult();
+}
